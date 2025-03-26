@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller implements HasMiddleware
 {
-    public static function middleware() {
+    public static function middleware()
+    {
         return [
             new Middleware('auth:sanctum', except: ['index', 'show'])
         ];
@@ -21,21 +22,20 @@ class PostController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Post()->all();
+        return Post::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    { 
         $fields = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
-            'password' => 'required'
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
         ]);
 
-        $post = Post::create($fields);
+        $post = $request->user()->posts()->create($fields);
 
         return $post;
     }
@@ -73,4 +73,6 @@ class PostController extends Controller implements HasMiddleware
         $post->delete();
         return ['message' => "The post ($post->id) has been deleted"];
     }
+
+    
 }
