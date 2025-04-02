@@ -20,7 +20,10 @@ Route::get('/{user}/posts', function (User $user) {
 
 Route::post('/{post}/comment', [CommentController::class, 'comment']);
 Route::post('/posts/{post}/comments', [CommentController::class, 'index']);
-Route::delete('/posts/{post}/comment/{comment}', [CommentController::class, 'destroy']);
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+Route::put('/comments/{comment}/update', [CommentController::class, 'update']);
+
+
 
 
 Route::post('/register', [AuthController::class, 'register']);
